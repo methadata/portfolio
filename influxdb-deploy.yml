@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  influxdb-deployment
+  labels:
+    app: influxdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      name: influxdb-deployment
+      labels:
+        app: influxdb
+    spec:
+      volumes:
+        - name: influxdb-data-store
+          persistentVolumeClaim:
+            claimName: influxdb-pvc
+      containers:
+        - image: quay.io/influxdb/influxdb:2.0.0-rc
+          name: influxdb
+          ports:
+            - containerPort: 8086
+              name: influxdb
+          volumeMounts:
+          - name: influxdb-data-store
+            mountPath: /root/.influxdbv2
