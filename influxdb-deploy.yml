@@ -11,7 +11,7 @@ spec:
       app: influxdb
   template:
     metadata:
-      name: influxdb-deployment
+      name: influxdb
       labels:
         app: influxdb
     spec:

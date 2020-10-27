@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: influxdb-setup
+  labels:
+    app: influxdb
+spec:
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      initContainers:
+        - name: wait-for-minio
+          image: groundnuty/k8s-wait-for:v1.2
+          args: ["service", "influxdb-service"]
+      containers:
+      - name: influxdb-setup
+        image: quay.io/influxdb/influxdb:2.0.0-rc
+        command:
+          - /usr/bin/influx
+          - setup
+          - "--force"
+          - "--host"
+          - "http://influxdb-service:8086"
+          - "--username"
+          - "admin"
+          - "--password"
+          - "admin123admin"
+          - "--org"
+          - "portfolio"
+          - "--bucket"
+          - "funds"
+      restartPolicy: OnFailure
+  backoffLimit: 2
