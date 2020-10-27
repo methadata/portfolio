@@ -3,4 +3,4 @@ kind: ConfigMap
 metadata:
   name: influxdb-config
 data:
-  query-concurrency: "20"
+  INFLUXDB_QUERY_CONCURRENCY: "20"

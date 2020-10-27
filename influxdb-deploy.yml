@@ -25,12 +25,9 @@ spec:
           ports:
             - containerPort: 8086
               name: influxdb
-          env:
-            - name: INFLUXDB_QUERY_CONCURRENCY
-              valueFrom:
-                  configMapKeyRef:
-                      name: influxdb-config
-                      key: query-concurrency
+          envFrom:
+            - configMapRef:
+                name: influxdb-config
           volumeMounts:
           - name: influxdb-data-store
             mountPath: /root/.influxdbv2
