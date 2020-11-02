@@ -8,6 +8,11 @@ chmod u+x influx
 sudo cp influx /usr/local/bin
 ```
 
+# convert date in LibreOffice calc to UNIX epoch time
+```
+=(D2- 25569) * 86400
+```
+
 # Load cvs data
 ```
 $ influx write dryrun -p s -b funds -f gbi-global-govies.csv
